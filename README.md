@@ -5,7 +5,7 @@ This is a webpage lets you schedule appointments and sends the links 5 mins befo
 
 <p align="center">
    <a href="https://app.vidcast.io/share/5abac9ec-8bb7-4f73-9c5f-fa8e9e2d4643" target="_blank">
-       <img src="virtual_assist" alt="virtaul-scheduling-assistant-demo"  width="100%" height="100%"/>
+       <img src="virtual_assist.png" alt="virtaul-scheduling-assistant-demo"  width="100%" height="100%"/>
     </a>
 </p>
 
