@@ -1,5 +1,10 @@
 import consultants from "./consultants.json";
 import axios from "axios";
+import {
+  PUBLIC_BACKGROUND_URL,
+  PUBLIC_CREATE_URL,
+  PUBLIC_WEBHOOK_URL,
+} from "$env/static/public";
 function getConsultantDetails(name) {
   let obj = consultants.consultants.find((o) => o.name === name);
   return { email: obj.email, phone: obj.phone };
@@ -7,16 +12,15 @@ function getConsultantDetails(name) {
 
 async function getLinks(sip, timeInSec, hostPhone, guestPhone, notification) {
   setTimeout(() => {
+    console.log(sip);
     const body = {
       expire_hours: 2,
       sip_target: sip,
       version: 2,
-      background_url:
-        "https://cdn.glitch.global/9d61d6d3-fe2d-454a-8661-2a5ac9778baa/drs_bg.png?v=1689857064033",
-      auto_dial: true,
+      background_url: PUBLIC_BACKGROUND_URL,
     };
     axios
-      .post("https://wxsd.wbx.ninja/create_url", body)
+      .post(PUBLIC_CREATE_URL, body)
       .then((response) => {
         const { data } = response;
         var hostLink = data.urls.Licensed[0];
@@ -45,12 +49,10 @@ async function sendMessage(link, number, method) {
     method: method,
   };
   console.log(body);
-  await axios
-    .post("https://hooks.us.webexconnect.io/events/M00X1SNUX0", body)
-    .catch((e) => {
-      console.log("Error in sending message:");
-      console.log(e);
-    });
+  await axios.post(PUBLIC_WEBHOOK_URL, body).catch((e) => {
+    console.log("Error in sending message:");
+    console.log(e);
+  });
 }
 
 export { getConsultantDetails, getLinks };

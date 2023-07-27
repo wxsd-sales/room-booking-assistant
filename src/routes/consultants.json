@@ -2,18 +2,18 @@
   "consultants": [
     {
       "name": "New Appointment",
-      "email": "rkanthet@cisco.com",
-      "phone": "+18642805923"
+      "email": "",
+      "phone": ""
     },
     {
       "name": "Follow Up Appointment",
-      "email": "willmills@cisco.com",
-      "phone": "+18642805923"
+      "email": "",
+      "phone": ""
     },
     {
       "name": "General Consultation",
-      "email": "willmills@cisco.com",
-      "phone": "+18642805923"
+      "email": "",
+      "phone": ""
     }
   ]
 }

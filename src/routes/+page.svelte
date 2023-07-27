@@ -3,6 +3,7 @@
 	import consultants from "./consultants.json";
 	import {getConsultantDetails,getLinks,} from './functions';
 	import SveltyPicker from 'svelty-picker';
+	import {PUBLIC_BACKGROUND_URL} from '$env/static/public';
 
 	let dialog, confDialog;
 	let currentDate = new Date();
@@ -33,6 +34,7 @@
 		console.log(currentDate)
 		var x = new Date(data.date+" "+data.time+":00");
 		let seconds = Math.abs(x.getTime() - currentDate.getTime())/1000;
+		console.log(seconds)
 		if(seconds-300<0){
 			seconds=0;
 		}
@@ -62,7 +64,7 @@
 		confDialog.close();
 	};
 </script>
- 
+ <body style="background-image: url({PUBLIC_BACKGROUND_URL});">
 	<button class="primary" on:click={() => showDialogClick()}>Schedule an appointment</button>
 	<dialog id="main-dialog">
 		<form class="content" on:submit|preventDefault={onSubmit}>
@@ -91,7 +93,7 @@
 			<h3>
 				Select Time
 			</h3>
-			<SveltyPicker inputClasses="w3-input w3-border" startDate="09:00" endDate="18:00" placeholder="--:-- --" required=true inputId="time" name="time" format="hh:ii" displayFormat="HH:ii P"/>
+			<SveltyPicker inputClasses="w3-input w3-border" startDate="07:00" endDate="18:00" placeholder="--:-- --" required=true inputId="time" name="time" format="hh:ii" displayFormat="HH:ii P"/>
 
 			<small>Office hours are 9am to 6pm</small>
 			<h3>
@@ -132,7 +134,7 @@
 			<button class="button is-danger is-outlined is-rounded" on:click={closeConfClick}>Close</button>
 		</div>
 	</dialog>
-
+</body>
 <svelte:head>
 	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -167,7 +169,6 @@
 		background-size: cover;
 		top: 0;
 		right:0;     
-        background-image: url("https://cdn.glitch.global/9d61d6d3-fe2d-454a-8661-2a5ac9778baa/drs_bg.png?v=1689857064033");
     }
 	.primary{
 		position: absolute;
