@@ -48,7 +48,7 @@ This is a webpage lets you schedule appointments and sends the links 5 mins befo
    cp .env.example .env
    ```
 3. Add PUBLIC_BACKGROUND_URL and the webhook you got from your Webex Connect flow in your `.env` file
-4. Add emails and phone numbers in the `consultants.json` file
+4. Add emails and phone numbers in the `/src/routes/consultants.json` file
 5. Run
    ```
    npm install
