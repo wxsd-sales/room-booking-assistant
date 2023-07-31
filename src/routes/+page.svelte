@@ -74,13 +74,13 @@
 				Patient Details
 			</h3>
 			<div class="field">
-				<label class="label">Name</label>
+				<label class="label" for="nameLabel">Name</label>
 				<div class="control">
 					<input class="input" type="text" id="name" name="name" placeholder="Enter your name" required>
 				</div>
 			</div>
 			<div class="field">
-				<label class="label">Phone Number</label>
+				<label class="label" for="phoneLabel">Phone Number</label>
 				<div class="control">
 					<input class="input" type="text" id="phone" name="phone" placeholder="Enter your phone number" required>
 				</div>
