@@ -36,7 +36,7 @@ async function getLinks(sip, timeInSec, hostPhone, guestPhone, notification) {
         }
       })
       .catch((e) => {
-        console.log("URL reation error:");
+        console.log("URL creation error:");
         console.log(e);
       });
   }, timeInSec * 1000);
