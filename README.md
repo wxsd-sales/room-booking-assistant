@@ -1,10 +1,10 @@
-# Virtual Scheduling Assistant
+# Room Booking Assistant
 
 
-This is a webpage lets you schedule appointments and sends the links 5 mins before your meeting starts either through WhatsApp or SMS
+This demo helps user schedule appointments on a room device and sends notification about the booking through WhatsApp, SMS and call.
 
 <p align="center">
-   <a href="https://app.vidcast.io/share/5abac9ec-8bb7-4f73-9c5f-fa8e9e2d4643" target="_blank">
+   <a href="https://app.vidcast.io/share/800513b6-14bf-4252-a496-046cdf31d9d3" target="_blank">
        <img src="virtual_assist.png" alt="virtaul-scheduling-assistant-demo"  width="100%" height="100%"/>
     </a>
 </p>
@@ -20,13 +20,13 @@ This is a webpage lets you schedule appointments and sends the links 5 mins befo
 
 ### Setup Webex Connect Flow
 
-1. Download the ``29413.workflow`` file from this repo 
+1. Download the ``31502.workflow`` file from this repo 
 2. Create a new Flow on your Webex Connect Sandbox and select the Upload a flow method and use the ``29413.workflow`` file
 
 3. Modify the Webhook and create a new Webex for this Flow and use the following JSON template and parse it:
 ```js
 {
-    "number":"+18642805923",
+    "number":"+18642xxxxxx",
     "message":"Hello Test",
     "method":"sms"
 }
@@ -40,7 +40,7 @@ This is a webpage lets you schedule appointments and sends the links 5 mins befo
 1. Clone this repository and change directory:
 
    ```
-   git clone https://github.com/wxsd-sales/report-issue-bot.git
+   git clone https://github.com/wxsd-sales/room-booking-assistant.git
    ```
 
 2. Copy `.env.example` file as `.env`:
@@ -48,12 +48,11 @@ This is a webpage lets you schedule appointments and sends the links 5 mins befo
    cp .env.example .env
    ```
 3. Add PUBLIC_BACKGROUND_URL and the webhook you got from your Webex Connect flow in your `.env` file
-4. Add emails and phone numbers in the `/src/routes/consultants.json` file
-5. Run
+4. Run
    ```
    npm install
    ```
-6. Run
+5. Run
    ```
    npm dev run
    ```
