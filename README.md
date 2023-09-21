@@ -5,7 +5,7 @@ This demo helps user schedule appointments on a room device and sends notificati
 
 <p align="center">
    <a href="https://app.vidcast.io/share/800513b6-14bf-4252-a496-046cdf31d9d3" target="_blank">
-       <img src="virtual_assist.png" alt="virtaul-scheduling-assistant-demo"  width="100%" height="100%"/>
+       <img src="room_booking.png" alt="room-booking-assistant-demo"  width="100%" height="100%"/>
     </a>
 </p>
 
