@@ -1,7 +1,7 @@
 <script>
 	import { onMount } from 'svelte';
 	import consultants from "./consultants.json";
-	import {getConsultantDetails,getLinks,} from './functions';
+	import {sendMessage, call, roomBooking} from './functions';
 	import SveltyPicker from 'svelty-picker';
 	import {PUBLIC_BACKGROUND_URL} from '$env/static/public';
 
@@ -11,15 +11,6 @@
 		document.getElementById("date").setAttribute("min", new Date().toISOString().split("T")[0]);
 		dialog = document.getElementById('main-dialog');
 		confDialog = document.getElementById('confirmation-dialog');
-		var select = document.getElementById("consultant");
-
-		for(var i = 0; i < consultants.consultants.length; i++) {
-			var opt = consultants.consultants[i].name;
-			var el = document.createElement("option");
-			el.textContent = opt;
-			el.value = opt;
-			select.appendChild(el);
-		}
 	})
 
 	async function onSubmit(e) {
@@ -31,6 +22,8 @@
 			data[key] = value;
 		}
 		console.log(data)
+		let timestamp = new Date(`${data.date} ${data.time}`).toISOString()
+		await roomBooking(timestamp,`Meet with ${data.name}`)
 		console.log(currentDate)
 		var x = new Date(data.date+" "+data.time+":00");
 		let seconds = Math.abs(x.getTime() - currentDate.getTime())/1000;
@@ -42,8 +35,12 @@
 			seconds=seconds-300
 		}
 		console.log(seconds)
-		var {email,phone}=getConsultantDetails(data.consultant)
-		getLinks(email,seconds,phone,data.phone, data.notification)
+		if(data.notification.toLowerCase()=='call'){
+			call(`Thanks for scheduling an appointment with MGM. Your desk will be ready on ${data.date} at ${data.time}`, data.phone);
+		}
+		else{
+		sendMessage(`Thanks for scheduling an appointment with MGM. Your desk will be ready on ${data.date} at ${data.time}`, data.phone, data.notification.toLowerCase());
+		}
 		e.target.reset();
 		closeClick();
 		showConfDialogClick();
@@ -65,14 +62,15 @@
 	};
 </script>
  <body style="background-image: url({PUBLIC_BACKGROUND_URL});">
+	<div class="parent">
+  <img class="image1" src="https://cdn.glitch.global/187f9a90-a558-4ef0-ae51-13196c7d5a01/mgm_logo.jpg?v=1695244922958" alt="mgm_heading"/>
+</div>
 	<button class="primary" on:click={() => showDialogClick()}>Schedule an appointment</button>
 	<dialog id="main-dialog">
 		<form class="content" on:submit|preventDefault={onSubmit}>
-			<h1>Schedule an appointment</h1>
+			<h4><b>Schedule an appointment</b></h4>
+
 			<hr class="solid">
-			<h3>
-				Patient Details
-			</h3>
 			<div class="field">
 				<label class="label" for="nameLabel">Name</label>
 				<div class="control">
@@ -85,32 +83,26 @@
 					<input class="input" type="text" id="phone" name="phone" placeholder="Enter your phone number" required>
 				</div>
 			</div>
-
-			<h3>
-				Select Date
-			</h3>
+			<div class="field">
+			<label class="label" for="dateLabel">Select Date</label>
 			<input class="input bulmaCalendar" id="date" name="date" type="date" data-display-mode="inline" data-color="grey" required>
-			<h3>
-				Select Time
-			</h3>
-			<SveltyPicker inputClasses="w3-input w3-border" startDate="07:00" endDate="18:00" placeholder="--:-- --" required=true inputId="time" name="time" format="hh:ii" displayFormat="HH:ii P"/>
+			</div>
+			<div class="field">
+			<label class="label" for="timeLabel">Select Time</label>
+			<SveltyPicker inputClasses="w3-input w3-border" startDate="07:00" endDate="23:00" placeholder="--:-- --" required=true inputId="time" name="time" format="hh:ii" displayFormat="HH:ii P"/>
 
 			<small>Office hours are 9am to 6pm</small>
-			<h3>
-				Select Request Type
-			</h3>
-			<div class="select is-fullwidth" >
-				<select name="consultant" id="consultant" required>
-				</select>
 			</div>
-			<h3>
-				Select Notification Method
-			</h3>
+			<div class="field">
+			<label class="label" for="notLabel">Select Notification Method</label>
 			<div class="select is-fullwidth" >
 				<select name="notification" id="notification" required>
-					<option>WhatsApp</option>
+					
 					<option>SMS</option>
+					<option>Call</option>
+					<option>WhatsApp</option>
 				</select>
+			</div>
 			</div>
 			<hr class="solid">
 			<div class="columns is-multiline is-mobile">
@@ -151,7 +143,7 @@
 	}
 	dialog {
 		border-radius: 5px;
-		width: 50%;
+		width: 80%;
 		transition: all 2s;
 		background-color: white;
 	}

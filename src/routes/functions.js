@@ -1,46 +1,12 @@
 import consultants from "./consultants.json";
 import axios from "axios";
 import {
-  PUBLIC_BACKGROUND_URL,
-  PUBLIC_CREATE_URL,
   PUBLIC_WEBHOOK_URL,
+  PUBLIC_CALL_WEBHOOK_URL,
+  PUBLIC_DEVICE_ID,
+  PUBLIC_BOOKINGS_URL,
+  PUBLIC_ACCESS_TOKEN,
 } from "$env/static/public";
-function getConsultantDetails(name) {
-  let obj = consultants.consultants.find((o) => o.name === name);
-  return { email: obj.email, phone: obj.phone };
-}
-
-async function getLinks(sip, timeInSec, hostPhone, guestPhone, notification) {
-  setTimeout(() => {
-    console.log(sip);
-    const body = {
-      expire_hours: 2,
-      sip_target: sip,
-      version: 2,
-      background_url: PUBLIC_BACKGROUND_URL,
-    };
-    axios
-      .post(PUBLIC_CREATE_URL, body)
-      .then((response) => {
-        const { data } = response;
-        var hostLink = data.urls.Licensed[0];
-        var guestLink = data.urls.Guest[0];
-        guestLink = guestLink.replace("guest", "hidden");
-        console.log(guestLink);
-        if (notification.toLowerCase() === "whatsapp") {
-          sendMessage(hostLink, hostPhone, "whatsapp");
-          sendMessage(guestLink, guestPhone, "whatsapp");
-        } else if (notification.toLowerCase() === "sms") {
-          sendMessage(hostLink, hostPhone, "sms");
-          sendMessage(guestLink, guestPhone, "sms");
-        }
-      })
-      .catch((e) => {
-        console.log("URL creation error:");
-        console.log(e);
-      });
-  }, timeInSec * 1000);
-}
 
 async function sendMessage(link, number, method) {
   const body = {
@@ -55,4 +21,55 @@ async function sendMessage(link, number, method) {
   });
 }
 
-export { getConsultantDetails, getLinks };
+async function call(link, number) {
+  const body = {
+    phone_number: number,
+    message: link,
+  };
+  console.log(body);
+  await axios.post(PUBLIC_CALL_WEBHOOK_URL, body).catch((e) => {
+    console.log("Error in sending message:");
+    console.log(e);
+  });
+}
+
+async function roomBooking(startTime, title) {
+  const body = {
+    deviceId: PUBLIC_DEVICE_ID,
+    body: {
+      Bookings: [
+        {
+          Id: "1",
+          Number: "rkanthet@cisco.com",
+          Organizer: {
+            Name: "Rajitha Kantheti",
+          },
+          Protocol: "Spark",
+          MeetingPlatform: "Webex",
+          Time: {
+            Duration: 60,
+            EndTimeBuffer: 50,
+            StartTime: startTime,
+          },
+          Title: title,
+        },
+      ],
+    },
+  };
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${PUBLIC_ACCESS_TOKEN}`,
+  };
+  console.log(body);
+  await axios
+    .post(PUBLIC_BOOKINGS_URL, body, {
+      headers: headers,
+    })
+    .then((r) => console.log("booking resp", r))
+    .catch((e) => {
+      console.log("Error in sending message:");
+      console.log(e);
+    });
+}
+
+export { sendMessage, call, roomBooking };

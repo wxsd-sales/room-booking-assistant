@@ -9,9 +9,7 @@ const config = {
     adapter: adapter(),
     paths: {
       base:
-        process.env.NODE_ENV === "production"
-          ? "/virtual-scheduling-assistant"
-          : "",
+        process.env.NODE_ENV === "production" ? "/room-booking-assistant" : "",
     },
   },
 };
