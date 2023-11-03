@@ -4,7 +4,7 @@
 This demo helps user schedule appointments on a room device and sends notification about the booking through WhatsApp, SMS and call.
 
 <p align="center">
-   <a href="https://app.vidcast.io/share/800513b6-14bf-4252-a496-046cdf31d9d3" target="_blank">
+   <a href="https://app.vidcast.io/share/aac254f7-3b3b-43ed-b258-76e757595793" target="_blank">
        <img src="room_booking.png" alt="room-booking-assistant-demo"  width="100%" height="100%"/>
     </a>
 </p>
