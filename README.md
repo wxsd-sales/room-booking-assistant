@@ -20,8 +20,8 @@ This demo helps user schedule appointments on a room device and sends notificati
 
 ### Setup Webex Connect Flow
 
-1. Download the ``31502.workflow`` file from this repo 
-2. Create a new Flow on your Webex Connect Sandbox and select the Upload a flow method and use the ``29413.workflow`` file
+1. Download the ``31503.workflow`` file from this repo 
+2. Create a new Flow on your Webex Connect Sandbox and select the Upload a flow method and use the ``31503.workflow`` file
 
 3. Modify the Webhook and create a new Webex for this Flow and use the following JSON template and parse it:
 ```js
